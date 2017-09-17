@@ -10,10 +10,6 @@ import requests
 from bs4 import BeautifulSoup
 from html.parser import HTMLParser
 import openpyxl
-from tkinter import *
-
-main_url = "https://www.robotevents.com/robot-competitions/vex-robotics-competition/RE-VRC-17-3084.html"
-
 
 class MLStripper(HTMLParser):
     def __init__(self):
@@ -36,9 +32,9 @@ def strip_tags(html):
 
 
 #main_url = "https://www.robotevents.com/robot-competitions/vex-robotics-competition/RE-VRC-17-3084.html"
-#main_url = input("Robot Events URL: ")
-#doc_name = input("XLSX: ")
-doc_name = "teams.xlsx"
+main_url = input("Robot Events URL: ")
+doc_name = input("XLSX: ")
+#doc_name = "teams.xlsx"
 driver = webdriver.Chrome()
 driver.wait = WebDriverWait(driver, 5)
 driver.get(main_url)

@@ -31,10 +31,8 @@ def strip_tags(html):
     return s.get_data()
 
 
-#main_url = "https://www.robotevents.com/robot-competitions/vex-robotics-competition/RE-VRC-17-3084.html"
 main_url = input("Robot Events URL: ")
-doc_name = input("XLSX: ")
-#doc_name = "teams.xlsx"
+doc_name = "teams.xlsx"
 driver = webdriver.Chrome()
 driver.wait = WebDriverWait(driver, 5)
 driver.get(main_url)
@@ -43,13 +41,12 @@ teams = driver.find_element_by_link_text("Team List")
 teams.click()
 html = driver.page_source
 soup = BeautifulSoup(html)
-#print(str(soup))
 
 all_trs = soup.find_all("tbody")
 tr1 = all_trs[1]
 tds = tr1.find_all("td")
 teams = []
-#teams
+
 for td in range(len(tds)):
     if td % 4 == 0 or td == 0:
         teams.append(strip_tags(str(tds[td])))
@@ -83,10 +80,11 @@ sheet.column_dimensions['D'].width = 20
 
 for i in range(len(teams)):
     try:
+        print("On team {0}.".format(str(i+1)))
         sheet['A'+str(i+2)].value = teams[i]
         sheet['B'+str(i+2)].value = names[i]
         sheet['C'+str(i+2)].value = organizations[i]
-
+        print(teams[i])
 
         driver.get("https://vexdb.io/teams/view/"+teams[i]+"?t=rankings")
         '''html = driver.page_source
@@ -117,7 +115,7 @@ for i in range(len(teams)):
         sheet['E'+str(i+2)].value = str(rank)
         sheet['F'+str(i+2)].value = str(opr)
         sheet['D'+str(i+2)].value = str(event)
-        print("On team {0}.".format(str(i+1)))
+
 
     except:
         '''sheet['A'+str(i+2)].value = "New Team"
